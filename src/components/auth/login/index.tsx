@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./style.module.css";
+// import style from "./style.module.css";
 import { Button, TextField, Typography } from "@mui/material";
 import { IPropsLogin } from "../../../common/types/auth";
 
@@ -50,7 +50,7 @@ const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
       </Button>
       <Typography
         variant="body1"
-        sx={{ fontFamily: "Popins" }}
+        sx={{ fontFamily: "Poppins" }}
         marginBottom={3}
       >
         У вас нет аккаунта?

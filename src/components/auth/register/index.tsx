@@ -16,12 +16,16 @@ const RegisterPage: React.FC<IPropsRegister> = (
 
   return (
     <>
-      <Typography variant="h3" fontFamily="Poppins" textAlign="center">
+      <Typography
+        variant="h3"
+        sx={{ fontFamily: "Poppins" }}
+        textAlign="center"
+      >
         Регистрация
       </Typography>
       <Typography
         variant="body1"
-        fontFamily="Poppins"
+        sx={{ fontFamily: "Poppins" }}
         textAlign="center"
         marginBottom={3}
       >
