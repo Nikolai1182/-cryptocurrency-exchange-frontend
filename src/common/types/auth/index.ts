@@ -14,11 +14,14 @@ export interface IPropsRegister {
 }
 
 export interface IAuthState {
-  user: IPublicUser;
+  user: {
+    user: IPublicUser;
+    token: string;
+  };
   isLogged: boolean;
 }
 
-interface IPublicUser {
+export interface IPublicUser {
   id: number | null;
   firstName: string;
   userName: string;
