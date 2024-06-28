@@ -63,6 +63,7 @@ const SideBarComponent = (props: any) => {
                     <ChevronLeftOutlined />
                   </IconButton>
                 )}
+                <Box></Box>
               </FlexBetween>
             </Box>
           </Box>
