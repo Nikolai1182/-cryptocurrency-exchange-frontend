@@ -4,7 +4,7 @@ import { Button, TextField, Typography } from "@mui/material";
 import { IPropsLogin } from "../../../common/types/auth";
 
 const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
-  const { setEmail, setPassword, navigate } = props;
+  const { navigate, register, errors } = props;
   return (
     <>
       <Typography variant="h3" fontFamily="Poppins" textAlign="center">
@@ -19,21 +19,31 @@ const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
         Введите ваш логин и пароль
       </Typography>
       <TextField
+        error={!!errors.email}
         fullWidth={true}
         margin="normal"
         label="@mail"
         variant="outlined"
         placeholder="Введите Ваш email"
-        onChange={(e) => setEmail(e.target.value)}
+        helperText={errors.email ? `${errors.email.message}` : ""}
+        {...register("email", {
+          required: "Это обязательное поле",
+          pattern: /^(?=.*[A-Z])(?=.*[\W_])[\w\W]+@[\w.-]+\.\w+$/,
+        })}
       />
       <TextField
+        error={!!errors.password}
         type="password"
         fullWidth={true}
         margin="normal"
         label="Password"
         variant="outlined"
         placeholder="Введите Ваш пароль"
-        onChange={(e) => setPassword(e.target.value)}
+        helperText={errors.password ? `${errors.password.message}` : ""}
+        {...register("password", {
+          required: "Это обязательное поле",
+          minLength: 4,
+        })}
       />
       <Button
         type="submit"
