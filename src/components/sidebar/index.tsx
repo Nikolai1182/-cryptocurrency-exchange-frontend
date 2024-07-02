@@ -13,23 +13,23 @@ import {
   useTheme,
 } from "@mui/material";
 import {
-  HomeOutlined,
   ChevronLeftOutlined,
   ChevronRightOutlined,
-  AutoGraphOutlined,
-  MenuBookOutlined,
-  SettingsOutlined,
   LogoutOutlined,
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "../flex-between";
+import { navMenu } from "../../common/moks/navigate";
+import { tokens } from "../../theme";
+import Logo from "../../assets/images/sidebar/logo.svg";
 
 const SideBarComponent = (props: any) => {
   const [active, setActive] = useState("");
-  const classes = useStyles;
+  const classes = useStyles();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const { isNoneMobile, drawerWidth, isOpen, setIsOpen } = props;
   useEffect(() => {
     setActive(pathname.substring(1));
@@ -52,11 +52,21 @@ const SideBarComponent = (props: any) => {
             },
           }}
         >
-          <Box width="100%">
+          <Box className={classes.navBlock}>
             <Box>
               <FlexBetween>
-                <Box display="flex" alignItems="center" gap="10px">
-                  <Typography>КриптоКапитон</Typography>
+                <Box className={classes.brand}>
+                  <img src={Logo} alt="logo image" />
+                  <Typography
+                    variant="h1"
+                    color={
+                      theme.palette.mode === "dark"
+                        ? colors.white.DEFAULT
+                        : colors.black.DEFAULT
+                    }
+                  >
+                    Демо
+                  </Typography>
                 </Box>
                 {!isNoneMobile && (
                   <IconButton onClick={() => setIsOpen(!isOpen)}>
@@ -66,6 +76,37 @@ const SideBarComponent = (props: any) => {
                 <Box></Box>
               </FlexBetween>
             </Box>
+            <List className={classes.navList}>
+              {navMenu.map((element) => {
+                return (
+                  <ListItem key={element.id}>
+                    <ListItemButton
+                      onClick={() => navigate(`${element.path}`)}
+                      className={classes.navItem}
+                    >
+                      <ListItemIcon>{element.icon}</ListItemIcon>
+                      <ListItemText>
+                        <Typography variant="body1">{element.name}</Typography>
+                      </ListItemText>
+                    </ListItemButton>
+                  </ListItem>
+                );
+              })}
+            </List>
+          </Box>
+          <Box width="100%">
+            <List>
+              <ListItem>
+                <ListItemButton className={classes.navItem}>
+                  <ListItemIcon>
+                    <LogoutOutlined />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Typography variant="body1">Logout</Typography>
+                  </ListItemText>
+                </ListItemButton>
+              </ListItem>
+            </List>
           </Box>
         </Drawer>
       )}
