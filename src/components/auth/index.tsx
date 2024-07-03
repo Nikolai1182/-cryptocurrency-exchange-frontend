@@ -4,13 +4,12 @@ import LoginPage from "./login";
 import RegisterPage from "./register";
 import { Box } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { instance } from "../../utils/axios";
-import { useAppDispatch } from "../../utils/hook";
-import { login } from "../../store/slice/auth";
+import { useAppDispatch, useAppSelector } from "../../utils/hook";
 import { AppErrors } from "../../common/errors";
 import { useForm } from "react-hook-form";
 import { LoginSchema, RegisterSchema } from "../../utils/yup";
 import { useStyles } from "./styles";
+import { registerUser, loginUser } from "../../store/thunks/auth";
 
 const AuthRootComponent: React.FC = (): JSX.Element => {
   const location = useLocation();
@@ -26,16 +25,12 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
       location.pathname === "/login" ? LoginSchema : RegisterSchema
     ),
   });
+  const loading = useAppSelector((store) => store.auth.isLoading);
 
   const handleSubmitForm = async (data: any) => {
     if (location.pathname === "/login") {
       try {
-        const userData = {
-          email: data.email,
-          password: data.password,
-        };
-        const response = await instance.post("auth/login", userData);
-        dispatch(login(response.data));
+        await dispatch(loginUser(data));
         navigate("/");
       } catch (error) {
         console.log(error);
@@ -50,8 +45,8 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
             email: data.email,
             password: data.password,
           };
-          const response = await instance.post("auth/register", userData);
-          dispatch(login(response.data));
+
+          await dispatch(registerUser(userData));
           navigate("/");
         } catch (error) {
           return error;
@@ -80,12 +75,14 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
               navigate={navigate}
               register={register}
               errors={errors}
+              loading={loading}
             />
           ) : location.pathname === "/register" ? (
             <RegisterPage
               register={register}
               errors={errors}
               navigate={navigate}
+              loading={loading}
             />
           ) : null}
         </Box>

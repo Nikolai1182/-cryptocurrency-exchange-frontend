@@ -1,12 +1,12 @@
 import React from "react";
 // import style from "./style.module.css";
-import { Button, TextField, Typography } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import { IPropsLogin } from "../../../common/types/auth";
-import AppButton from "../../app-button";
 import { useStyles } from "./styles";
+import AppLoadingButton from "../../loading-button";
 
 const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
-  const { navigate, register, errors } = props;
+  const { navigate, register, errors, loading } = props;
   const classes = useStyles();
   return (
     <>
@@ -37,10 +37,10 @@ const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
         helperText={errors.password ? `${errors.password.message}` : ""}
         {...register("password")}
       />
-      <AppButton
+      <AppLoadingButton
+        loading={loading}
         type="submit"
         sx={{
-          fontFamily: "Poppins",
           marginTop: 2,
           marginBottom: 2,
           width: "60%",
@@ -49,7 +49,7 @@ const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
         variant="contained"
       >
         Войти
-      </AppButton>
+      </AppLoadingButton>
       <Typography variant="body1" marginBottom={3}>
         У вас нет аккаунта?
         <span
