@@ -2,20 +2,18 @@ import React from "react";
 // import style from "./style.module.css";
 import { Button, TextField, Typography } from "@mui/material";
 import { IPropsLogin } from "../../../common/types/auth";
+import AppButton from "../../app-button";
+import { useStyles } from "./styles";
 
 const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
   const { navigate, register, errors } = props;
+  const classes = useStyles();
   return (
     <>
-      <Typography variant="h3" fontFamily="Poppins" textAlign="center">
+      <Typography variant="h3" fontSize={32} textAlign="center">
         Авторизация
       </Typography>
-      <Typography
-        variant="body1"
-        fontFamily="Poppins"
-        textAlign="center"
-        marginBottom={3}
-      >
+      <Typography variant="body1" textAlign="center" marginBottom={3}>
         Введите ваш логин и пароль
       </Typography>
       <TextField
@@ -39,7 +37,7 @@ const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
         helperText={errors.password ? `${errors.password.message}` : ""}
         {...register("password")}
       />
-      <Button
+      <AppButton
         type="submit"
         sx={{
           fontFamily: "Poppins",
@@ -51,14 +49,13 @@ const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
         variant="contained"
       >
         Войти
-      </Button>
-      <Typography
-        variant="body1"
-        sx={{ fontFamily: "Poppins" }}
-        marginBottom={3}
-      >
+      </AppButton>
+      <Typography variant="body1" marginBottom={3}>
         У вас нет аккаунта?
-        <span className="registerText" onClick={() => navigate("/register")}>
+        <span
+          className={classes.insitingText}
+          onClick={() => navigate("/register")}
+        >
           Регистрация
         </span>
       </Typography>
