@@ -12,7 +12,7 @@ import { useAppSelector } from "../../utils/hook";
 import { tokens } from "../../theme";
 import { useTheme } from "@emotion/react";
 import { ColorModeContext } from "../../theme";
-import { useContext } from "react";
+import { FC, useContext } from "react";
 import {
   DarkMode,
   LightMode,
@@ -22,8 +22,11 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { useStyles } from "./styles";
 import FlexBetween from "../flex-between";
+import { ITopBarProps } from "../../common/types/top-bar";
 
-export default function TopBarComponent(props: any): JSX.Element {
+const TopBarComponent: FC<ITopBarProps> = (
+  props: ITopBarProps
+): JSX.Element => {
   const { user } = useAppSelector((store) => store.auth.user);
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
@@ -65,24 +68,7 @@ export default function TopBarComponent(props: any): JSX.Element {
         </Box>
       </Toolbar>
     </AppBar>
-    // <Box className={classes.root}>
-    //   <Grid> Welcome {user ? `${user.firstName}` : ""}!</Grid>
-    //   <Box display="flex">
-    //     <Grid onClick={colorMode.toggleColorMode} className={classes.iconBlock}>
-    //       <IconButton className={classes.themeIcon}>
-    //         {theme.palette.mode === "dark" ? <DarkMode /> : <LightMode />}
-    //       </IconButton>
-    //       <IconButton>
-    //         <NotificationsNone />
-    //       </IconButton>
-    //     </Grid>
-    //     <Grid className={classes.searchBlock}>
-    //       <IconButton className={classes.searchIcon}>
-    //         <SearchIcon />
-    //       </IconButton>
-    //       <InputBase className={classes.searchInput} placeholder="Поиск" />
-    //     </Grid>
-    //   </Box>
-    // </Box>
   );
-}
+};
+
+export default TopBarComponent;
