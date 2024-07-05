@@ -27,7 +27,8 @@ import { ITopBarProps } from "../../common/types/top-bar";
 const TopBarComponent: FC<ITopBarProps> = (
   props: ITopBarProps
 ): JSX.Element => {
-  const { user } = useAppSelector((store) => store.auth.user);
+  const user = sessionStorage.getItem("name");
+
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
   const classes = useStyles();
@@ -43,7 +44,7 @@ const TopBarComponent: FC<ITopBarProps> = (
               onClick={() => setIsOpen(!isOpen)}
             />
             <Typography variant="h3">
-              Welcome, {user ? `${user.firstName}` : ""}!
+              Welcome, {user ? `${user}` : ""}!
             </Typography>
           </FlexBetween>
         </Grid>
