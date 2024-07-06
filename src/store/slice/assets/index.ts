@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  getFavoriteAssetsOne,
-  // getFavoriteAssetsTwo,
-} from "../../thunks/assets";
+import { getFavoriteAssets, getPricesAssets } from "../../thunks/assets";
 
 const initialState: any = {
   assets: [],
   favoriteAssets: [],
+  pricesAssets: [],
 };
 
 export const assetSlice = createSlice({
@@ -14,8 +12,11 @@ export const assetSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getFavoriteAssetsOne.fulfilled, (state, action) => {
+    builder.addCase(getFavoriteAssets.fulfilled, (state, action) => {
       state.favoriteAssets.push(action.payload);
+    });
+    builder.addCase(getPricesAssets.fulfilled, (state, action) => {
+      state.pricesAssets.push(action.payload);
     });
   },
 });
