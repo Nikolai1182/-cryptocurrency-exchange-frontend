@@ -57,7 +57,7 @@ const AreaChart: FC<IAreaChartProps> = (props: IAreaChartProps) => {
       ?.map((element: number[]): string =>
         moment(element[0]).format("DD.MM.YY")
       )
-      .slice(-50),
+      .slice(-20),
     datasets: [
       {
         label: "Цена",
@@ -65,7 +65,7 @@ const AreaChart: FC<IAreaChartProps> = (props: IAreaChartProps) => {
           ?.map((element: number[]): number => {
             return element[1] as number;
           })
-          .slice(-50),
+          .slice(-20),
         fill: "start",
         backgroundColor: (context: ScriptableContext<"line">) => {
           const ctx = context.chart.ctx;

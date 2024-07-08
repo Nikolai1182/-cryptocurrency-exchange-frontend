@@ -6,6 +6,7 @@ import { useStyles } from "./styles";
 import AreaChart from "../../components/charts/area-chart";
 import TrendUp from "../../assets/images/chart/trend-up.svg";
 import TrendDown from "../../assets/images/chart/trend-down.svg";
+import LineChart from "../../components/charts/line-chart";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -92,8 +93,13 @@ export default function Home() {
   });
   return (
     <Box className={classes.root}>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} className={classes.areaChart}>
         {renderFavoriteBlock}
+      </Grid>
+      <Grid container className={classes.lineChartBlock}>
+        <Grid item xs={12} sm={12} lg={12}>
+          {pricesAssets.length && <LineChart data={pricesAssets} />}
+        </Grid>
       </Grid>
     </Box>
   );
