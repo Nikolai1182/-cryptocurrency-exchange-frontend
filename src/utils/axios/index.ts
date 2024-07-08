@@ -4,13 +4,19 @@ import axios from "axios";
 export const instance = axios.create({
   baseURL: "http://localhost:5000",
   timeout: 1000,
-  headers: { "X-Custom-Header": "foobar" },
+  headers: {
+    "X-Custom-Header": "foobar",
+    "x-cg-demo-api-key": "CG-w27cokYdWXF5jGDxg6Rw8Soh",
+  },
 });
 
 export const coinGeckoApi = axios.create({
   baseURL: "https://api.coingecko.com/api/v3",
   timeout: 1000,
-  headers: { "X-Custom-Header": "foobar" },
+  headers: {
+    "X-Custom-Header": "foobar",
+    "x-cg-demo-api-key": "CG-w27cokYdWXF5jGDxg6Rw8Soh",
+  },
 });
 
 // export const cryptoRankInstance = axios.create({

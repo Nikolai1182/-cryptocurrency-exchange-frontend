@@ -7,11 +7,7 @@ export const getFavoriteAssets = createAsyncThunk(
   "coins/markets",
   async (data: string, { rejectWithValue }) => {
     try {
-      const assets = await coinGeckoApi.get(`/coins/${data}`, {
-        params: {
-          api_key: API_KEY,
-        },
-      });
+      const assets = await coinGeckoApi.get(`/coins/${data}`);
       return { name: data, data: assets.data };
       // const singleAsset = await coinGeckoApi.get(
       //   `coins/markets?vs_currency=usd&ids=${data}&order=market_cap_desc&per_page=100&page=1&sparkline=false`,
@@ -44,12 +40,7 @@ export const getPricesAssets = createAsyncThunk(
   async (data: string, { rejectWithValue }) => {
     try {
       const assets = await coinGeckoApi.get(
-        `/coins/${data}/market_chart?vs_currency=usd&days=90`,
-        {
-          params: {
-            api_key: API_KEY,
-          },
-        }
+        `/coins/${data}/market_chart?vs_currency=usd&days=90`
       );
       // console.log(assets.data);
 

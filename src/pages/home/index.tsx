@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../utils/hook";
 import { getFavoriteAssets, getPricesAssets } from "../../store/thunks/assets";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useStyles } from "./styles";
 import AreaChart from "../../components/charts/area-chart";
+import TrendUp from "../../assets/images/chart/trend-up.svg";
+import TrendDown from "../../assets/images/chart/trend-down.svg";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -12,7 +14,6 @@ export default function Home() {
   );
   const pricesAssets = useAppSelector((store) => store.assets.pricesAssets);
 
-  // console.log("PricesAssets", priceData);
   const favoriteAssetsId = useMemo(() => ["bitcoin", "notcoin"], []);
   const fetchDataRef = useRef(false);
   const classes = useStyles();
@@ -36,36 +37,54 @@ export default function Home() {
     [dispatch]
   );
 
-  useEffect(() => {
-    fetchDataPrices(favoriteAssetsId);
-  }, []);
+  // useEffect(() => {
+  //   fetchDataPrices(favoriteAssetsId);
+  // }, []);
   useEffect(() => {
     if (fetchDataRef.current) return;
     fetchDataRef.current = true;
     fetchData(favoriteAssetsId);
+    fetchDataPrices(favoriteAssetsId);
   }, [favoriteAssetsId, fetchData]);
 
-  const renderFavoriteBlock = filteredArray.map((element: any) => {
+  const renderFavoriteBlock = filteredArray.map((element: any, i) => {
+    // console.log(element.data.market_data);
+
     const currentPrice = element.data.market_data.current_price.usd;
     const currentCup = element.data.market_data.market_cap.usd;
+    const changePrice =
+      element.data.market_data.market_cap_change_percentage_24h;
     return (
       <Grid item xs={12} sm={6} lg={6} key={element.name}>
         <Grid container className={classes.topCardItem}>
           <Grid item xs={12} sm={6} lg={6} sx={{ height: "185px" }}>
-            <h3>{element.name}</h3>
+            <h3 className={classes.assetName}>{element.name}</h3>
             <div className={classes.itemDetails}>
-              <Box>
-                <h3 className={classes.cardPrice}>
-                  ${currentPrice.toFixed(2)}
-                </h3>
-                <p className={classes.cardCapitalize}>
-                  ${currentCup.toFixed(0)}
-                </p>
+              <span className={classes.cardPrice}>
+                ${currentPrice.toFixed(2)}
+              </span>
+              <Box
+                className={
+                  changePrice > 0
+                    ? `${classes.priceTrend} ${classes.trendUp}`
+                    : `${classes.priceTrend} ${classes.trendDown}`
+                }
+              >
+                {changePrice > 0 ? (
+                  <img src={TrendUp} alt="TrendUp" />
+                ) : (
+                  <img src={TrendDown} alt="TrendDown" />
+                )}
+                <Typography variant="body1">
+                  {Number(changePrice).toFixed(2)}%
+                </Typography>
               </Box>
             </div>
           </Grid>
-          <Grid item xs={12} sm={6} lg={6}>
-            <AreaChart data={pricesAssets[0].prices} />
+          <Grid item xs={12} sm={6} lg={6} className={classes.areaGrid}>
+            {pricesAssets.length && pricesAssets[i]?.prices && (
+              <AreaChart data={pricesAssets[i]?.prices} />
+            )}
           </Grid>
         </Grid>
       </Grid>
