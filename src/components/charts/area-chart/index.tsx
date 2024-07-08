@@ -28,7 +28,7 @@ ChartJS.register(
 
 const AreaChart: FC<IAreaChartProps> = (props: IAreaChartProps) => {
   const { data } = props;
-  console.log("data в area", data);
+
   const options = {
     responsive: true,
     scales: {
@@ -53,15 +53,19 @@ const AreaChart: FC<IAreaChartProps> = (props: IAreaChartProps) => {
   };
 
   const values = {
-    labels: data.map((element: number[]): string =>
-      moment(element[0]).format("DD.MM.YY")
-    ),
+    labels: data
+      ?.map((element: number[]): string =>
+        moment(element[0]).format("DD.MM.YY")
+      )
+      .slice(-50),
     datasets: [
       {
         label: "Цена",
-        data: data.map((element: number[]): number => {
-          return element[1] as number;
-        }),
+        data: data
+          ?.map((element: number[]): number => {
+            return element[1] as number;
+          })
+          .slice(-50),
         fill: "start",
         backgroundColor: (context: ScriptableContext<"line">) => {
           const ctx = context.chart.ctx;
@@ -73,7 +77,7 @@ const AreaChart: FC<IAreaChartProps> = (props: IAreaChartProps) => {
       },
     ],
   };
-  return <Line options={options} data={values} width={300} height={100} />;
+  return <Line options={options} data={values} width={300} height={110} />;
 };
 
 export default AreaChart;
