@@ -1,5 +1,5 @@
 import axios from "axios";
-// const token = sessionStorage.getItem("token");
+const token = sessionStorage.getItem("token");
 
 export const instance = axios.create({
   baseURL: "http://localhost:5000",
@@ -29,7 +29,7 @@ export const coinGeckoApi = axios.create({
 // });
 
 // Добавляем перехватчик для каждого запроса
-// cryptoRankInstance.interceptors.request.use(
+// coinGeckoApi.interceptors.request.use(
 //   (config) => {
 //     const token = sessionStorage.getItem("token"); // Или другой метод получения токена
 //     if (token) {
