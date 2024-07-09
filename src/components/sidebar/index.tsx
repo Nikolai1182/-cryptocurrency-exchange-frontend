@@ -19,6 +19,8 @@ import { navMenu } from "../../common/moks/navigate";
 import { tokens } from "../../theme";
 import Logo from "../../assets/images/sidebar/logo.svg";
 import { ISideBarProps } from "../../common/types/side-bar";
+import ThemeSwitcherComponent from "../theme-switcher";
+import SearchBarComponent from "../search-bar";
 
 const SideBarComponent: React.FC<ISideBarProps> = (
   props: ISideBarProps
@@ -72,9 +74,17 @@ const SideBarComponent: React.FC<ISideBarProps> = (
                     <ChevronLeftOutlined />
                   </IconButton>
                 )}
-                <Box></Box>
               </FlexBetween>
             </Box>
+            <List>
+              {!isNoneMobile && (
+                <ListItem>
+                  <Box padding="5px">
+                    <SearchBarComponent />
+                  </Box>
+                </ListItem>
+              )}
+            </List>
             <List className={classes.navList}>
               {navMenu.map((element) => {
                 return (
@@ -99,6 +109,13 @@ const SideBarComponent: React.FC<ISideBarProps> = (
           </Box>
           <Box width="100%">
             <List>
+              {!isNoneMobile && (
+                <ListItem>
+                  <Box padding="5px">
+                    <ThemeSwitcherComponent />
+                  </Box>
+                </ListItem>
+              )}
               <ListItem>
                 <ListItemButton className={classes.navItem}>
                   <ListItemIcon>

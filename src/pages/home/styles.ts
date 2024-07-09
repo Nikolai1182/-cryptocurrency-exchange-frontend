@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme: Theme) => {
       padding: 32,
     },
     areaChart: {
-      marginBottom: 32,
+      paddingBottom: 20,
     },
     lineChartBlock: {
       backgroundColor: `${
