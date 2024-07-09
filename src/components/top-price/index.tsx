@@ -12,7 +12,6 @@ import { useStyles } from "./styles";
 export default function TopPriceComponent(props: any): JSX.Element {
   const { data } = props;
   const classes = useStyles();
-  console.log("data", data);
 
   return (
     <>
