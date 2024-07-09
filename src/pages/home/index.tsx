@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../utils/hook";
-import { getFavoriteAssets, getPricesAssets } from "../../store/thunks/assets";
+import {
+  getFavoriteAssets,
+  getPricesAssets,
+  getTopPriceCoins,
+} from "../../store/thunks/assets";
 import { Box, Grid, Typography } from "@mui/material";
 import { useStyles } from "./styles";
 import AreaChart from "../../components/charts/area-chart";
@@ -8,6 +12,7 @@ import TrendUp from "../../assets/images/chart/trend-up.svg";
 import TrendDown from "../../assets/images/chart/trend-down.svg";
 import LineChart from "../../components/charts/line-chart";
 import { Cryptocurrency } from "../../common/types/assets";
+import TopPriceComponent from "../../components/top-price";
 
 export default function Home(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -15,6 +20,8 @@ export default function Home(): JSX.Element {
     (store) => store.assets.favoriteAssets
   );
   const pricesAssets = useAppSelector((store) => store.assets.pricesAssets);
+
+  const topPrice = useAppSelector((store) => store.assets.topPricesCoins);
 
   const favoriteAssetsId = useMemo(() => ["bitcoin", "notcoin"], []);
   const fetchDataRef = useRef(false);
@@ -39,11 +46,20 @@ export default function Home(): JSX.Element {
     [dispatch]
   );
 
+  const fetchTopPricesData = async () => {
+    try {
+      return dispatch(getTopPriceCoins());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (fetchDataRef.current) return;
     fetchDataRef.current = true;
     fetchData(favoriteAssetsId);
     fetchDataPrices(favoriteAssetsId);
+    fetchTopPricesData();
   }, [favoriteAssetsId, fetchData]);
 
   const renderFavoriteBlock = filteredArray.map(
@@ -96,6 +112,11 @@ export default function Home(): JSX.Element {
       <Grid container className={classes.lineChartBlock}>
         <Grid item xs={12} sm={12} lg={12}>
           {pricesAssets.length && <LineChart data={pricesAssets} />}
+        </Grid>
+      </Grid>
+      <Grid container className={classes.topPriceRoot}>
+        <Grid item xs={12} sm={12} lg={12}>
+          {topPrice.length && <TopPriceComponent data={topPrice} />}
         </Grid>
       </Grid>
     </Box>

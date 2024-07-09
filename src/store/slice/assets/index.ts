@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getFavoriteAssets, getPricesAssets } from "../../thunks/assets";
+import {
+  getFavoriteAssets,
+  getPricesAssets,
+  getTopPriceCoins,
+} from "../../thunks/assets";
 
 const initialState: any = {
   assets: [],
   favoriteAssets: [],
   pricesAssets: [],
+  topPricesCoins: [],
 };
 
 export const assetSlice = createSlice({
@@ -17,6 +22,9 @@ export const assetSlice = createSlice({
     });
     builder.addCase(getPricesAssets.fulfilled, (state, action) => {
       state.pricesAssets.push(action.payload);
+    });
+    builder.addCase(getTopPriceCoins.fulfilled, (state, action) => {
+      state.topPricesCoins.push(action.payload);
     });
   },
 });
