@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { coinGeckoApi } from "../../../utils/axios";
+import { coinGeckoApi, instanceAuth } from "../../../utils/axios";
 
 export const getFavoriteAssets = createAsyncThunk(
   "coins/markets",
@@ -24,8 +24,6 @@ export const getPricesAssets = createAsyncThunk(
       const assets = await coinGeckoApi.get(
         `/coins/${data}/market_chart?vs_currency=usd&days=90`
       );
-      // console.log(assets.data);
-
       return assets.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {
@@ -44,9 +42,22 @@ export const getTopPriceCoins = createAsyncThunk(
       const response = await coinGeckoApi.get(
         `/coins/markets?vs_currency=usd&per_page=100`
       );
-      // console.log(response.data);
-
       return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const createWatchListRecord = createAsyncThunk(
+  "watchlist/create",
+  (data: { name: string; assetId: string }, { rejectWithValue }) => {
+    try {
+      return instanceAuth.post(`watchlist/create`, data);
     } catch (error: any) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
