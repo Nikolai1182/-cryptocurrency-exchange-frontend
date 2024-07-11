@@ -8,7 +8,7 @@ const SearchBarComponent: FC = (): JSX.Element => {
   const navigate = useNavigate();
   const [selectedItem, setSelectedItem] = useState<string | null>("");
   const topPrice = useAppSelector((store) => store.assets.topPricesCoins);
-  console.log(selectedItem);
+  console.log(topPrice);
 
   return (
     <Stack spacing={2} sx={{ width: "300px" }}>
@@ -28,7 +28,10 @@ const SearchBarComponent: FC = (): JSX.Element => {
             }}
           />
         )}
-        options={topPrice[0].map((element: { name: string }) => element.name)}
+        options={
+          topPrice.length &&
+          topPrice[0]?.map((element: { name: string }) => element.name)
+        }
       />
     </Stack>
   );
