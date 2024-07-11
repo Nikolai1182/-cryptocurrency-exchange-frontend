@@ -6,7 +6,6 @@ export const instance = axios.create({
   timeout: 1000,
   headers: {
     "X-Custom-Header": "foobar",
-    "x-cg-demo-api-key": "CG-w27cokYdWXF5jGDxg6Rw8Soh",
   },
 });
 
